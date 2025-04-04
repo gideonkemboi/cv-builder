@@ -7,19 +7,47 @@ import ExperienceInput from "./Experience.tsx";
 
 interface EditorProps {
   activePage: "content" | "customize";
+  sampleCVDetails: CVDetails;
   cvDetails: CVDetails;
   setCVDetails: React.Dispatch<React.SetStateAction<CVDetails>>;
 }
 
 export default function Editor({
   activePage,
+  sampleCVDetails,
   cvDetails,
   setCVDetails,
 }: EditorProps) {
-  return activePage === "content" ? (
-    <CVEditor cvDetails={cvDetails} setCVDetails={setCVDetails} />
-  ) : (
-    <LayoutEditor />
+  const emptyCVDetails: CVDetails = {
+    personalDetails: {
+      name: "",
+      email: "",
+      phoneNumber: "",
+      address: "",
+    },
+    education: [],
+    experience: [],
+  };
+
+  function handleClearResume() {
+    setCVDetails(emptyCVDetails);
+  }
+
+  function handleLoadSample() {
+    setCVDetails(sampleCVDetails);
+  }
+  return (
+    <div>
+      <div>
+        <button onClick={handleClearResume}>Clear Resume</button>
+        <button onClick={handleLoadSample}>Load Sample</button>
+      </div>
+      {activePage === "content" ? (
+        <CVEditor cvDetails={cvDetails} setCVDetails={setCVDetails} />
+      ) : (
+        <LayoutEditor />
+      )}
+    </div>
   );
 }
 

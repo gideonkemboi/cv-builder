@@ -6,12 +6,12 @@ import CV from "./CV.tsx";
 import { v4 as uuidv4 } from "uuid";
 
 interface ButtonProps {
-  icon: string;
+  icon?: string;
   text: string;
   onClick: () => void;
 }
 
-function Button({ icon, text, onClick }: ButtonProps) {
+export function Button({ icon, text, onClick }: ButtonProps) {
   return (
     <button
       onClick={onClick}
@@ -103,7 +103,7 @@ function App() {
       },
     ],
   };
-  
+
   const [cvDetails, setCVDetails] = useState<CVDetails>(sampleCVDetails);
   const [activePage, setActivePage] = useState<"content" | "customize">(
     "content"
@@ -128,6 +128,7 @@ function App() {
       </div>
       <Editor
         activePage={activePage}
+        sampleCVDetails={sampleCVDetails}
         cvDetails={cvDetails}
         setCVDetails={setCVDetails}
       />
