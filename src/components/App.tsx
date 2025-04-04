@@ -9,16 +9,17 @@ interface ButtonProps {
   icon?: string;
   text: string;
   onClick: () => void;
+  isActive: boolean;
 }
 
-export function Button({ icon, text, onClick }: ButtonProps) {
+function Button({ icon, text, onClick, isActive }: ButtonProps) {
   return (
     <button
       onClick={onClick}
       type="button"
-      className="flex flex-col items-center text-sm bg-blue-100 rounded-sm p-2 w-full font-semibold"
+      className={`flex w-full flex-col items-center rounded-lg p-2 text-xs font-semibold ${isActive ? "bg-blue-100" : "bg-white"}`}
     >
-      <img src={icon} className="w-7 h-7" />
+      <img src={icon} className="h-6 w-6 fill-black" />
       {text}
     </button>
   );
@@ -106,7 +107,7 @@ function App() {
 
   const [cvDetails, setCVDetails] = useState<CVDetails>(sampleCVDetails);
   const [activePage, setActivePage] = useState<"content" | "customize">(
-    "content"
+    "content",
   );
   function handleClick(page: "content" | "customize") {
     setActivePage(page);
@@ -114,16 +115,18 @@ function App() {
 
   return (
     <>
-      <div className="flex flex-col items-center gap-2 w-24 p-2">
+      <div className="flex h-36 w-22 flex-none flex-col items-center justify-around gap-2 rounded-lg bg-white p-2 shadow-sm">
         <Button
           icon={content}
           text="Content"
           onClick={() => handleClick("content")}
+          isActive={activePage === "content"}
         />
         <Button
           icon={customize}
           text="Customize"
           onClick={() => handleClick("customize")}
+          isActive={activePage === "customize"}
         />
       </div>
       <Editor

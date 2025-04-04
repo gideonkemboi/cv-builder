@@ -19,7 +19,7 @@ export default function Input({
       type={type}
       value={value}
       placeholder={placeholder}
-      className="flex"
+      className="flex w-full rounded-sm bg-blue-50 p-2 text-sm font-light"
       onChange={onChange}
     />
   );
