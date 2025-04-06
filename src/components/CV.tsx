@@ -1,14 +1,29 @@
 import { CVDetails } from "./App.tsx";
 
 interface CVProps {
+  font: "serif" | "sans" | "mono";
   cvDetails: CVDetails;
+  themeColor: string;
+  isDark: boolean;
+  textColor: string;
 }
 
-export default function CV({ cvDetails }: CVProps) {
+export default function CV({
+  font,
+  cvDetails,
+  themeColor,
+  textColor,
+}: CVProps) {
   const { personalDetails, education, experience } = cvDetails;
+
   return (
-    <div className="h-[1123px] max-w-[794px] flex-[2_2_auto] bg-white shadow-lg">
-      <div className="flex h-30 flex-col items-center justify-center bg-cyan-950 text-white">
+    <div
+      className={`h-[1123px] max-w-[794px] flex-[2_2_auto] bg-white font-${font} shadow-lg`}
+    >
+      <div
+        className="flex h-36 flex-col items-center justify-center gap-2 text-white"
+        style={{ backgroundColor: themeColor, color: textColor }}
+      >
         <p className="text-3xl font-bold">{personalDetails.name}</p>
         <div className="flex gap-2">
           <p className="font-medium">{personalDetails.email}</p>
@@ -18,7 +33,10 @@ export default function CV({ cvDetails }: CVProps) {
       </div>
       <div className="flex flex-col gap-4 p-10">
         <div className="">
-          <h3 className="bg-sky-100 p-1 text-center font-bold text-cyan-950">
+          <h3
+            className="bg-sky-100 p-1 text-center font-bold"
+            style={{ color: themeColor, backgroundColor: textColor }}
+          >
             Education
           </h3>
           <div className="flex flex-col gap-5 pt-5 pb-5">
@@ -42,7 +60,10 @@ export default function CV({ cvDetails }: CVProps) {
           </div>
         </div>
         <div>
-          <h3 className="bg-sky-100 p-1 text-center font-bold text-cyan-950">
+          <h3
+            className="bg-sky-100 p-1 text-center font-bold"
+            style={{ color: themeColor, backgroundColor: textColor }}
+          >
             Professional Experience
           </h3>
           <div className="flex flex-col gap-5 pt-5 pb-5">

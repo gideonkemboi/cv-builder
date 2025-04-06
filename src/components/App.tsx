@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import content from "../assets/content.svg";
 import customize from "../assets/customize.svg";
 import Editor from "./Editor.tsx";
 import CV from "./CV.tsx";
 import { v4 as uuidv4 } from "uuid";
+import tinycolor from "tinycolor2";
 
 interface ButtonProps {
   icon?: string;
@@ -17,7 +18,7 @@ function Button({ icon, text, onClick, isActive }: ButtonProps) {
     <button
       onClick={onClick}
       type="button"
-      className={`flex w-full flex-col items-center rounded-lg p-2 text-xs font-semibold ${isActive ? "bg-blue-100" : "bg-white"}`}
+      className={`flex w-full flex-col items-center rounded-lg p-2 text-sm font-semibold ${isActive ? "bg-blue-100" : "bg-white"}`}
     >
       <img src={icon} className="h-6 w-6 fill-black" />
       {text}
@@ -109,23 +110,31 @@ function App() {
   const [activePage, setActivePage] = useState<"content" | "customize">(
     "content",
   );
-  function handleClick(page: "content" | "customize") {
+  function handleChangePage(page: "content" | "customize") {
     setActivePage(page);
   }
 
+  const [font, setFont] = useState<"serif" | "sans" | "mono">("sans");
+  const [themeColor, setThemeColor] = useState("#083344");
+  const isDark: boolean = useMemo(
+    () => tinycolor(themeColor).isDark(),
+    [themeColor],
+  );
+  const textColor = isDark ? "#ffffff" : "#000000";
+
   return (
     <>
-      <div className="flex h-36 w-22 flex-none flex-col items-center justify-around gap-2 rounded-lg bg-white p-2 shadow-sm">
+      <div className="flex h-40 w-24 flex-none flex-col items-center justify-around gap-2 rounded-xl bg-white p-2 shadow-sm">
         <Button
           icon={content}
           text="Content"
-          onClick={() => handleClick("content")}
+          onClick={() => handleChangePage("content")}
           isActive={activePage === "content"}
         />
         <Button
           icon={customize}
           text="Customize"
-          onClick={() => handleClick("customize")}
+          onClick={() => handleChangePage("customize")}
           isActive={activePage === "customize"}
         />
       </div>
@@ -134,8 +143,19 @@ function App() {
         sampleCVDetails={sampleCVDetails}
         cvDetails={cvDetails}
         setCVDetails={setCVDetails}
+        font={font}
+        setFont={setFont}
+        themeColor={themeColor}
+        setThemeColor={setThemeColor}
+        textColor={textColor}
       />
-      <CV cvDetails={cvDetails} />
+      <CV
+        cvDetails={cvDetails}
+        font={font}
+        themeColor={themeColor}
+        isDark={isDark}
+        textColor={textColor}
+      />
     </>
   );
 }

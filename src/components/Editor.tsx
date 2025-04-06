@@ -13,6 +13,11 @@ interface EditorProps {
   sampleCVDetails: CVDetails;
   cvDetails: CVDetails;
   setCVDetails: React.Dispatch<React.SetStateAction<CVDetails>>;
+  font: "serif" | "sans" | "mono";
+  setFont: React.Dispatch<React.SetStateAction<"serif" | "sans" | "mono">>;
+  themeColor: string;
+  setThemeColor: React.Dispatch<React.SetStateAction<string>>;
+  textColor: string;
 }
 
 export default function Editor({
@@ -20,6 +25,11 @@ export default function Editor({
   sampleCVDetails,
   cvDetails,
   setCVDetails,
+  font,
+  setFont,
+  themeColor,
+  setThemeColor,
+  textColor,
 }: EditorProps) {
   const emptyCVDetails: CVDetails = {
     personalDetails: {
@@ -41,12 +51,12 @@ export default function Editor({
   }
   return (
     <div className="flex max-w-[500px] flex-auto flex-col gap-5">
-      <div className="sticky top-2 flex items-center rounded-xl bg-white pt-3 pr-5 pb-3 pl-5 shadow-lg">
+      <div className="sticky top-2 flex items-center rounded-xl bg-white pt-3 pr-5 pb-3 pl-5 font-bold shadow-lg">
         <button
           onClick={handleClearResume}
-          className="mr-auto flex w-1/2 items-center gap-3"
+          className="mr-auto flex w-1/2 items-center gap-3 text-red-500"
         >
-          <img src={deleteIcon} className="h-4 w-4" />
+          <img src={deleteIcon} className="h-4 w-4 fill-red-500" />
           Clear Resume
         </button>
         <button
@@ -59,7 +69,13 @@ export default function Editor({
       {activePage === "content" ? (
         <CVEditor cvDetails={cvDetails} setCVDetails={setCVDetails} />
       ) : (
-        <LayoutEditor />
+        <LayoutEditor
+          font={font}
+          setFont={setFont}
+          themeColor={themeColor}
+          setThemeColor={setThemeColor}
+          textColor={textColor}
+        />
       )}
     </div>
   );
@@ -448,6 +464,118 @@ function CVEditor({ cvDetails, setCVDetails }: CVEditorProps) {
   );
 }
 
-function LayoutEditor() {
-  return <h3>Layout</h3>;
+interface LayoutEditorProps {
+  font: "serif" | "sans" | "mono";
+  setFont: React.Dispatch<React.SetStateAction<"serif" | "sans" | "mono">>;
+  themeColor: string;
+  setThemeColor: React.Dispatch<React.SetStateAction<string>>;
+  textColor: string;
+}
+
+function LayoutEditor({
+  font,
+  setFont,
+  themeColor,
+  setThemeColor,
+  textColor,
+}: LayoutEditorProps) {
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-col justify-between gap-2 rounded-xl bg-white p-5">
+        <h3 className="text-2xl font-bold">Layout</h3>
+        <div className="flex gap-4">
+          <div className="flex flex-col items-center gap-0.5">
+            <button className="flex h-14 w-14 cursor-pointer flex-col overflow-hidden rounded-lg border-1 border-black">
+              <div
+                className="h-1/2 w-14"
+                style={{ backgroundColor: themeColor }}
+              ></div>
+              <div className="h-1/2 w-14 bg-white"></div>
+            </button>
+            <p>Top</p>
+          </div>
+          <div className="flex flex-col items-center gap-0.5">
+            <button className="flex h-14 w-14 cursor-pointer overflow-hidden rounded-lg border-1 border-black">
+              <div
+                className="h-14 w-1/2"
+                style={{ backgroundColor: themeColor }}
+              ></div>
+              <div className="h-14 w-1/2 bg-white"></div>
+            </button>
+            <p>Left</p>
+          </div>
+          <div className="flex flex-col items-center gap-0.5">
+            <button className="flex h-14 w-14 cursor-pointer overflow-hidden rounded-lg border-1 border-black">
+              <div className="h-14 w-1/2 bg-white"></div>
+              <div
+                className="h-14 w-1/2"
+                style={{ backgroundColor: themeColor }}
+              ></div>
+            </button>
+            <p>Right</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col justify-between gap-2 rounded-xl bg-white p-5">
+        <h3 className="text-2xl font-bold">Color</h3>
+        <div className="flex items-center gap-2">
+          <p className="font-medium">Theme Color</p>
+          <label
+            className="inline-block h-10 w-10 cursor-pointer overflow-hidden rounded-full shadow-xl"
+            style={{ backgroundColor: themeColor }}
+          >
+            <input
+              type="color"
+              value={themeColor}
+              onChange={(e) => setThemeColor(e.target.value)}
+              className="h-full w-full cursor-pointer opacity-0"
+            />
+          </label>
+        </div>
+      </div>
+
+      <div className="flex flex-col justify-between gap-2 rounded-xl bg-white p-5">
+        <h3 className="text-2xl font-bold">Fonts</h3>
+        <div className="flex gap-4">
+          <button
+            className="flex h-18 w-14 cursor-pointer flex-col items-center justify-center rounded-lg border-1 font-serif font-medium"
+            onClick={() => setFont("serif")}
+            style={
+              font === "serif"
+                ? { backgroundColor: themeColor, color: textColor }
+                : {}
+            }
+          >
+            <p>Aa</p>
+            <p>Serif</p>
+          </button>
+          <button
+            className="flex h-18 w-14 cursor-pointer flex-col items-center justify-center rounded-lg border-1 font-sans font-medium"
+            onClick={() => setFont("sans")}
+            style={
+              font === "sans"
+                ? { backgroundColor: themeColor, color: textColor }
+                : {}
+            }
+          >
+            <p>Aa</p>
+            <p>Sans</p>
+          </button>
+          <button
+            className="flex h-18 w-14 cursor-pointer flex-col items-center justify-center rounded-lg border-1 font-mono font-medium"
+            onClick={() => setFont("mono")}
+            style={
+              font === "mono"
+                ? { backgroundColor: themeColor, color: textColor }
+                : {}
+            }
+          >
+            <p>Aa</p>
+            <p>Mono</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
