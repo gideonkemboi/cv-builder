@@ -64,7 +64,7 @@ function App() {
       name: "John Doe",
       email: "johndoe@example.com",
       phoneNumber: "+1234567890",
-      address: "123 Main Street, Springfield, USA",
+      address: "Springfield, USA",
     },
     education: [
       {
@@ -92,7 +92,8 @@ function App() {
         startDate: "01/2019",
         endDate: "01/2021",
         location: "Mountain View, CA",
-        description: "Developed scalable web applications and cloud services.",
+        description:
+          "Developed scalable web applications and cloud services as part of the Google Cloud Platform team. Collaborated with cross-functional teams to design and implement features that improved user experience and system performance.",
       },
       {
         id: uuidv4(),
@@ -101,7 +102,8 @@ function App() {
         startDate: "01/2022",
         endDate: "Present",
         location: "Redmond, WA",
-        description: "Led a team of developers to build enterprise solutions.",
+        description:
+          "Led a team of developers to build enterprise solutions for Microsoft Azure. Designed and implemented microservices architecture to improve scalability and maintainability of cloud-based applications. Mentored junior developers, providing guidance on best practices and code reviews. ",
       },
     ],
   };
@@ -115,12 +117,14 @@ function App() {
   }
 
   const [font, setFont] = useState<"serif" | "sans" | "mono">("sans");
-  const [themeColor, setThemeColor] = useState("#083344");
+  const [themeColor, setThemeColor] = useState("#000000");
   const isDark: boolean = useMemo(
     () => tinycolor(themeColor).isDark(),
     [themeColor],
   );
   const textColor = isDark ? "#ffffff" : "#000000";
+
+  const [layout, setLayout] = useState<"top" | "left" | "right">("top");
 
   return (
     <>
@@ -148,6 +152,7 @@ function App() {
         themeColor={themeColor}
         setThemeColor={setThemeColor}
         textColor={textColor}
+        setLayout={setLayout}
       />
       <CV
         cvDetails={cvDetails}
@@ -155,6 +160,7 @@ function App() {
         themeColor={themeColor}
         isDark={isDark}
         textColor={textColor}
+        layout={layout}
       />
     </>
   );

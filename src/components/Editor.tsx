@@ -18,6 +18,7 @@ interface EditorProps {
   themeColor: string;
   setThemeColor: React.Dispatch<React.SetStateAction<string>>;
   textColor: string;
+  setLayout: React.Dispatch<React.SetStateAction<"top" | "left" | "right">>;
 }
 
 export default function Editor({
@@ -30,6 +31,7 @@ export default function Editor({
   themeColor,
   setThemeColor,
   textColor,
+  setLayout,
 }: EditorProps) {
   const emptyCVDetails: CVDetails = {
     personalDetails: {
@@ -75,6 +77,7 @@ export default function Editor({
           themeColor={themeColor}
           setThemeColor={setThemeColor}
           textColor={textColor}
+          setLayout={setLayout}
         />
       )}
     </div>
@@ -470,6 +473,7 @@ interface LayoutEditorProps {
   themeColor: string;
   setThemeColor: React.Dispatch<React.SetStateAction<string>>;
   textColor: string;
+  setLayout: React.Dispatch<React.SetStateAction<"top" | "left" | "right">>;
 }
 
 function LayoutEditor({
@@ -478,6 +482,7 @@ function LayoutEditor({
   themeColor,
   setThemeColor,
   textColor,
+  setLayout,
 }: LayoutEditorProps) {
   return (
     <div className="flex flex-col gap-5">
@@ -485,7 +490,10 @@ function LayoutEditor({
         <h3 className="text-2xl font-bold">Layout</h3>
         <div className="flex gap-4">
           <div className="flex flex-col items-center gap-0.5">
-            <button className="flex h-14 w-14 cursor-pointer flex-col overflow-hidden rounded-lg border-1 border-black">
+            <button
+              className="flex h-14 w-14 cursor-pointer flex-col overflow-hidden rounded-lg border-1 border-black"
+              onClick={() => setLayout("top")}
+            >
               <div
                 className="h-1/2 w-14"
                 style={{ backgroundColor: themeColor }}
@@ -495,7 +503,10 @@ function LayoutEditor({
             <p>Top</p>
           </div>
           <div className="flex flex-col items-center gap-0.5">
-            <button className="flex h-14 w-14 cursor-pointer overflow-hidden rounded-lg border-1 border-black">
+            <button
+              className="flex h-14 w-14 cursor-pointer overflow-hidden rounded-lg border-1 border-black"
+              onClick={() => setLayout("left")}
+            >
               <div
                 className="h-14 w-1/2"
                 style={{ backgroundColor: themeColor }}
@@ -505,7 +516,10 @@ function LayoutEditor({
             <p>Left</p>
           </div>
           <div className="flex flex-col items-center gap-0.5">
-            <button className="flex h-14 w-14 cursor-pointer overflow-hidden rounded-lg border-1 border-black">
+            <button
+              className="flex h-14 w-14 cursor-pointer overflow-hidden rounded-lg border-1 border-black"
+              onClick={() => setLayout("right")}
+            >
               <div className="h-14 w-1/2 bg-white"></div>
               <div
                 className="h-14 w-1/2"
